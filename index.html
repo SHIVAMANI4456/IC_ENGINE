@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>IC Engine Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    body {
+      font-family: Arial;
+      background: #0f172a;
+      color: white;
+      text-align: center;
+    }
+
+    .container {
+      display: flex;
+      justify-content: space-around;
+      margin: 20px;
+    }
+
+    .panel {
+      background: #1e293b;
+      padding: 20px;
+      border-radius: 10px;
+      width: 40%;
+    }
+
+    input, select {
+      margin: 10px;
+      padding: 8px;
+      width: 80%;
+    }
+
+    button {
+      padding: 10px;
+      margin-top: 15px;
+      background: #22c55e;
+      border: none;
+      cursor: pointer;
+    }
+
+    canvas {
+      margin: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>🚗 IC Engine Smart Dashboard</h1>
+
+<div class="container">
+
+  <!-- INPUT -->
+  <div class="panel">
+    <h2>Inputs</h2>
+
+    Fuel Type:
+    <select id="fuel">
+      <option>Petrol</option>
+      <option>Ethanol</option>
+      <option>CNG</option>
+    </select><br>
+
+    RPM:
+    <input type="number" id="rpm" value="3000"><br>
+
+    Temperature (°C):
+    <input type="number" id="temp" value="80"><br>
+
+    Compression Ratio:
+    <input type="number" id="cr" value="10"><br>
+
+    <button onclick="runModel()">Run Analysis</button>
+  </div>
+
+  <!-- OUTPUT -->
+  <div class="panel">
+    <h2>Results</h2>
+
+    <p id="eff"></p>
+    <p id="quality"></p>
+    <p id="effects"></p>
+
+    <h3>🔍 Diagnosis</h3>
+    <p id="diagnosis"></p>
+    <p id="solution"></p>
+    <p id="severity"></p>
+  </div>
+
+</div>
+
+<h2>📊 Graphs</h2>
+
+<canvas id="rpmGraph"></canvas>
+<canvas id="tempGraph"></canvas>
+<canvas id="crGraph"></canvas>
+
+<script>
+function runModel() {
+
+  let rpm = document.getElementById("rpm").value;
+  let temp = document.getElementById("temp").value;
+  let cr = document.getElementById("cr").value;
+
+  let efficiency = (1 - (1 / Math.pow(cr, 0.4))) * 100;
+  let quality = 10 - (rpm/2000 + temp/50);
+  if (quality < 0) quality = 0;
+
+  let effect = rpm > 4000 ? "High Wear" : "Normal";
+
+  document.getElementById("eff").innerHTML = "Efficiency: " + efficiency.toFixed(2) + "%";
+  document.getElementById("quality").innerHTML = "Exhaust Quality: " + quality.toFixed(2) + "/10";
+  document.getElementById("effects").innerHTML = "Engine Effect: " + effect;
+
+  // 🔥 Diagnosis Logic
+  let diagnosis="", solution="", severity="Low";
+
+  if (temp > 90) {
+    diagnosis = "Engine overheating";
+    solution = "Check radiator and coolant";
+    severity = "High";
+  }
+  else if (rpm > 4500) {
+    diagnosis = "High RPM stress";
+    solution = "Reduce speed and check lubrication";
+    severity = "Medium";
+  }
+  else if (efficiency < 40) {
+    diagnosis = "Low efficiency";
+    solution = "Check spark plug and injector";
+    severity = "Medium";
+  }
+  else {
+    diagnosis = "Engine normal";
+    solution = "No action needed";
+  }
+
+  document.getElementById("diagnosis").innerHTML = "Problem: " + diagnosis;
+  document.getElementById("solution").innerHTML = "Solution: " + solution;
+  document.getElementById("severity").innerHTML = "Severity: " + severity;
+
+  drawGraphs();
+}
+
+// GRAPHS
+function drawGraphs() {
+
+  new Chart(document.getElementById("rpmGraph"), {
+    type: 'line',
+    data: {
+      labels: [1000,2000,3000,4000,5000,6000],
+      datasets: [{
+        label: "CO vs RPM",
+        data: [8,6,4,3,2,1]
+      }]
+    }
+  });
+
+  new Chart(document.getElementById("tempGraph"), {
+    type: 'line',
+    data: {
+      labels: [20,40,60,80,100,120],
+      datasets: [{
+        label: "NOx vs Temp",
+        data: [2,3,5,7,9,11]
+      }]
+    }
+  });
+
+  new Chart(document.getElementById("crGraph"), {
+    type: 'line',
+    data: {
+      labels: [6,8,10,12,14],
+      datasets: [{
+        label: "Efficiency",
+        data: [35,45,52,58,62]
+      }]
+    }
+  });
+}
+</script>
+
+</body>
+</html>
