@@ -1,11 +1,47 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Vehicle Health Dashboard</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+
+  <h1>🚗 AI Engine Monitor</h1>
+
+  <label>Fuel Type</label>
+  <select id="fuel">
+    <option>Petrol</option>
+    <option>Diesel</option>
+    <option>Ethanol</option>
+    <option>CNG</option>
+  </select>
+
+  <label>RPM</label>
+  <input type="number" id="rpm" value="3000">
+
+  <label>Temperature (°C)</label>
+  <input type="number" id="temp" value="80">
+
+  <label>Compression Ratio</label>
   <input type="number" id="cr" value="10">
 
   <button onclick="runModel()">Run Analysis</button>
+
 </div>
 
+<!-- MAIN -->
 <div class="main">
 
+  <!-- TOP CARDS -->
   <div class="topCards">
 
     <div class="card">
@@ -25,7 +61,9 @@
 
   </div>
 
+  <!-- GRAPHS -->
   <div class="graphContainer">
+
     <div class="graphBox">
       <canvas id="rpmGraph"></canvas>
     </div>
@@ -37,14 +75,18 @@
     <div class="graphBox">
       <canvas id="crGraph"></canvas>
     </div>
+
   </div>
 
+  <!-- AI DIAGNOSIS -->
   <div class="diagnosisBox">
+
     <h2>🤖 AI Diagnosis</h2>
 
     <p id="diagnosis"></p>
     <p id="solution"></p>
     <p id="severity"></p>
+
   </div>
 
 </div>
