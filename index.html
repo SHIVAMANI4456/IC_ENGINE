@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Smart Vehicle Dashboard</title>
+
+<link rel="stylesheet" href="style.css">
+
+<script src="https://cdn.plot.ly/plotly-2.30.0.min.js"></script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="sidebar">
+
+<h1>Vehicle Dashboard</h1>
+
+<label>RPM</label>
+<input type="range" id="rpm" min="1000" max="7000" value="3000">
+<span id="rpmValue">3000</span>
+
+<label>Speed</label>
+<input type="range" id="speed" min="0" max="180" value="60">
+<span id="speedValue">60</span>
+
+<label>Load</label>
+<input type="range" id="load" min="0" max="100" value="40">
+<span id="loadValue">40</span>
+
+<label>Gear</label>
+<input type="range" id="gear" min="1" max="6" value="3">
+<span id="gearValue">3</span>
+
+<label>Terrain</label>
+
+<select id="terrain">
+
+<option>Highway</option>
+<option>City</option>
+<option>Hill</option>
+<option>Off-road</option>
+
+</select>
+
+<div class="feedback">
+
+<h2>Live Feedback</h2>
+
+<p id="performance"></p>
+<p id="efficiency"></p>
+<p id="stress"></p>
+<p id="suggestion"></p>
+
+</div>
+
+</div>
+
+<div class="dashboard">
+
+<div id="torqueChart" class="chart"></div>
+
+<div id="efficiencyChart" class="chart"></div>
+
+</div>
+
+</div>
+
+<script src="app.js"></script>
+
+</body>
+
+</html>
